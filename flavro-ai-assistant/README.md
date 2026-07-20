@@ -1,16 +1,16 @@
 # 🍽️ Flavro Restaurant AI Assistant
 
-An AI-powered restaurant assistant built using **n8n**, **OpenAI**, **Pinecone**, and **Google Sheets**.
+An AI-powered restaurant assistant built using **n8n**, **OpenAI**, **Pinecone**, and **Google Sheets**. The assistant helps customers browse the menu, place food orders, answer restaurant policy questions, and submit feedback through a conversational AI interface.
 
 ## 🚀 Features
 
-- Display restaurant menu
-- Place customer orders
-- Check menu item availability
-- Update menu stock
-- Answer restaurant policy questions using Pinecone (RAG)
-- Collect customer feedback
-- Maintain conversation context with AI Memory
+- 🍽️ Display restaurant menu
+- 🛒 Place customer orders
+- 📦 Update menu stock automatically
+- 📖 Answer restaurant policy questions using Pinecone (RAG)
+- ⭐ Collect customer feedback
+- 💬 AI-powered conversations
+- 🧠 Maintain conversation context with memory
 
 ## 🛠️ Tech Stack
 
@@ -27,7 +27,11 @@ An AI-powered restaurant assistant built using **n8n**, **OpenAI**, **Pinecone**
 2. AI Agent understands the request.
 3. Retrieves menu information from Google Sheets.
 4. Places customer orders.
-5. Updates menu stock.
+5. Updates menu stock automatically.
 6. Answers restaurant policy questions using Pinecone.
-7. Collects customer feedback.
-8. Responds with an AI-generated answer.
+7. Stores customer feedback.
+8. Responds with an AI-generated response.
+
+## 📸 Workflow
+
+![Flavro AI Workflow](Flavro.png)
