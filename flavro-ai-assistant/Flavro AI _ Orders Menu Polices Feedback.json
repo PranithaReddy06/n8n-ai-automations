@@ -1,0 +1,491 @@
+{
+  "name": "Flavro AI | Orders Menu Polices Feedback",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cba21c69-df22-43c1-b6cf-5b326ed4bea4",
+      "name": "When chat message received",
+      "webhookId": "6cf0aa30-49ec-4c96-a85f-3e9ef18b123f"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Flavro Restaurant AI Assistant Instructions\n\nYou are a friendly, polite, and professional assistant for Flavro Restaurant.\n\nMenu\n- Use Get Menu to display the menu in a table format.\n- Never display or mention stock quantities or inventory numbers to customers.\n- Only show item names, descriptions (if available), and prices.\n\nOrdering\n- Before placing an order, verify that the requested item exists and is in stock.\n- This stock check is for internal use only. Never reveal available stock, inventory counts, or remaining quantities to customers.\n- If an item is available, simply confirm that it is available.\n- If an item is unavailable, politely inform the customer that it is currently out of stock and suggest similar available items.\n- Ask for the customer's name and the order quantity only if they are not already provided.\n- Use Add Orders to record the order.\n- After the order is successfully placed, use Update Menu Stock to reduce the item's stock by the ordered quantity.\n- Never expose internal inventory information, database values, or stock counts in any response.\n\nPolicies\n- Use Policies RAG to answer all restaurant policy-related questions.\n- Do not answer policy questions from memory.\n\nFeedback\n- When a customer shares feedback, use Add Feedback to save it exactly as provided.\n- If the customer's name is missing, ask only for their name.\n- Automatically classify the feedback as Positive or Negative in the Category field.\n- Save the exact response you gave to the customer in the Resolution field.\n- For negative feedback, apologize sincerely and provide a 10% discount coupon for their next order.\n- For positive feedback, thank the customer and provide a 5% discount coupon for their next order.\n\nGeneral Rules\n- Never make up menu items, prices, stock, or policies.\n- Never reveal inventory levels, remaining stock, database fields, or internal system information.\n- If a customer asks \"How many are left?\" or \"What is your stock?\", politely reply:\n  \"The item is currently available.\" or \"The item is currently out of stock.\" Do not provide numbers.\n- Always respond politely, professionally, and concisely."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0260b396-f502-4d16-92e4-ad492121b80b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -112,
+        224
+      ],
+      "id": "08a309e0-3e08-4061-b077-0879d127df13",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "DeNnSaJ6Lm6xBHve",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        48,
+        224
+      ],
+      "id": "e225a520-c3aa-4bc4-8ec9-c69a57c20825",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E",
+          "mode": "list",
+          "cachedResultName": "Flavro Restaurant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 782535111,
+          "mode": "list",
+          "cachedResultName": "Feedback",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E/edit#gid=782535111"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Customer Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Customer_Name', ``, 'string') }}",
+            "Feedback ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Feedback_', ``, 'string') }}",
+            "Category": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Category', ``, 'string') }}",
+            "Resolution": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Resolution', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Customer Name",
+              "displayName": "Customer Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Feedback ",
+              "displayName": "Feedback ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Resolution",
+              "displayName": "Resolution",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        576,
+        224
+      ],
+      "id": "50b84e1e-3665-4d89-a2a5-48a7e15de4af",
+      "name": "Add Feedback",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "usJ8WLGfJzahHbzc",
+          "name": "Flavro Restaurant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E",
+          "mode": "list",
+          "cachedResultName": "Flavro Restaurant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Menu",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        464,
+        224
+      ],
+      "id": "a4a7683f-0700-404e-9787-0bb8323550d4",
+      "name": "Get Menu",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "usJ8WLGfJzahHbzc",
+          "name": "Flavro Restaurant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E",
+          "mode": "list",
+          "cachedResultName": "Flavro Restaurant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1001246761,
+          "mode": "list",
+          "cachedResultName": "Orders",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E/edit#gid=1001246761"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Person name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Person_name', ``, 'string') }}",
+            "Item": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Item', ``, 'string') }}",
+            "Quantity": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Quantity', ``, 'string') }}",
+            "Price": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Price', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Person name",
+              "displayName": "Person name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Item",
+              "displayName": "Item",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        352,
+        224
+      ],
+      "id": "71a8662d-7eae-4155-9134-f45271324c5c",
+      "name": "Add Orders",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "usJ8WLGfJzahHbzc",
+          "name": "Flavro Restaurant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E",
+          "mode": "list",
+          "cachedResultName": "Flavro Restaurant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Menu",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OIFKm7RQtGHj-yV8H7tOZcX3ejVruTZrHLWrUpfPD9E/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Item Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Item_Name__using_to_match_', ``, 'string') }}",
+            "price": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('price', ``, 'string') }}",
+            "Quantity": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Quantity', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Item Name"
+          ],
+          "schema": [
+            {
+              "id": "Item Name",
+              "displayName": "Item Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        224
+      ],
+      "id": "7e98d730-8cda-48f1-b6ad-7ca2d730f0f0",
+      "name": "Update Menu Stock",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "usJ8WLGfJzahHbzc",
+          "name": "Flavro Restaurant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://prod-1-data.ke.pinecone.io/assistant/chat/flavrorestaurant",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Api-Key",
+              "value": "pcsk_3N56UW_Rszt1EkXKeEdEaTSoY6Ri4BgMdaYoRnhuoZRnxouSVGHGV3wAeA6tTYRZTXoTiD"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"{{$fromAI('searchQuery')}}\"\n    }\n  ],\n  \"stream\": false,\n  \"model\": \"gpt-4o\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        720,
+        224
+      ],
+      "id": "b23faa7c-8be3-47ff-92b9-f182ebc3ef73",
+      "name": "Policies RAG"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Feedback": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Menu": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Orders": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Menu Stock": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Policies RAG": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "ccad205d-9911-48c9-97cb-0bd12820ced0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9a44480656b2cb43a7b71d6a1f7ad774788eda8cc5df82d519b08eb964300206"
+  },
+  "nodeGroups": [],
+  "id": "YMoRK75BzuhOXmYg",
+  "tags": []
+}
