@@ -58,7 +58,9 @@ Hire      Maybe      Reject
             ▼
        Notify HR
 ```
+## 📸 Workflow
 
+![Workflow](HireFlow-resumeScreening.png)
 
 ## 💼 Business Use Case
 
