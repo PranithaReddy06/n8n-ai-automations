@@ -60,7 +60,7 @@ Hire      Maybe      Reject
 ```
 ## 📸 Workflow
 
-![Workflow](HireFlow-resumeScreening.png)
+![Workflow](HireFlow-ResumeScreening.png)
 
 ## 💼 Business Use Case
 
