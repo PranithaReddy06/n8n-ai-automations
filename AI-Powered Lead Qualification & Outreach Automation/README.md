@@ -94,3 +94,6 @@ Send Email (Gmail)
 - Improves sales team efficiency
 
 ---
+## 📸 Workflow
+
+![Workflow](Lead_Qualification_Outreach.png)
