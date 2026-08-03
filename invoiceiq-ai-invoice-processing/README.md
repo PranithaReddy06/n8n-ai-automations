@@ -102,3 +102,27 @@ The workflow extracts the following information:
 7. Processing completes automatically.
 
 ---
+
+# 📷 Screenshots
+
+## 🔄 Workflow
+
+Complete n8n workflow for automated invoice processing.
+
+![Workflow](Screenshots/InvoiceIQ-Workflow.png)
+
+---
+
+## 📊 Google Sheets Output
+
+Validated invoice data automatically stored after duplicate verification.
+
+![Google Sheets Output](Screenshots/Invoice-Storage.png)
+
+---
+
+## 📱 Telegram Duplicate Alert
+
+Instant notification sent when a duplicate invoice is detected.
+
+![Telegram Duplicate Alert](Screenshots/Telegram-Duplicate-Alert.png)
